@@ -1,5 +1,6 @@
 package com.marekkrzyszczyk.postsapp.controller;
 
+import com.marekkrzyszczyk.postsapp.model.dto.PostDto;
 import com.marekkrzyszczyk.postsapp.model.entity.Post;
 import com.marekkrzyszczyk.postsapp.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,8 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public List<Post> listAllPosts(@RequestParam(required = false) String sortByTitle) {
-        List<Post> posts;
+    public List<PostDto> listAllPosts(@RequestParam(required = false) String sortByTitle) {
+        List<PostDto> posts;
         if (sortByTitle != null) {
             posts = postService.listAllNotDeleted(sortByTitle);
         } else {

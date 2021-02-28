@@ -1,5 +1,6 @@
 package com.marekkrzyszczyk.postsapp.service;
 
+import com.marekkrzyszczyk.postsapp.model.dto.PostDto;
 import com.marekkrzyszczyk.postsapp.model.entity.Post;
 import com.marekkrzyszczyk.postsapp.repository.PostRepository;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ class PostServiceTest {
     @Test
     void listAllTest() {
         when(postRepository.findByDeletedFalse()).thenReturn(Arrays.asList(post1, post2));
-        List<Post> posts = postService.listAllNotDeleted();
+        List<PostDto> posts = postService.listAllNotDeleted();
         assertEquals(2, posts.size());
         assertEquals(new Post(1L, "title", "some content", 2L), posts.get(0));
         assertEquals(new Post(2L, "next title", "some other content", 1L), posts.get(1));

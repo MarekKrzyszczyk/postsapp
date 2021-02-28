@@ -1,5 +1,7 @@
 package com.marekkrzyszczyk.postsapp.service;
 
+import com.marekkrzyszczyk.postsapp.model.dto.CustomMapper;
+import com.marekkrzyszczyk.postsapp.model.dto.PostDto;
 import com.marekkrzyszczyk.postsapp.model.entity.Post;
 import com.marekkrzyszczyk.postsapp.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +15,12 @@ import java.util.Optional;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final CustomMapper customMapper;
 
     @Autowired
-    public PostService(PostRepository postRepository) {
+    public PostService(PostRepository postRepository, CustomMapper customMapper) {
         this.postRepository = postRepository;
+        this.customMapper = customMapper;
     }
 
     public List<Post> saveAll(List<Post> posts) {
@@ -46,22 +50,23 @@ public class PostService {
             post.setEdited(true);
             postRepository.save(post);
         }
-        return post;
+       return post;
     }
 
-    public List<Post> listAllNotDeleted() {
-        return postRepository.findByDeletedFalse();
+    public List<PostDto> listAllNotDeleted() {
+        return customMapper.mapPosts(postRepository.findByDeletedFalse());
     }
 
-    public List<Post> listAllNotDeleted(String sorting) {
+    public List<PostDto> listAllNotDeleted(String sorting) {
         List<Post> posts;
         if (sorting.equalsIgnoreCase("ASC")) {
             posts = postRepository.findByDeletedFalse(Sort.by(Sort.Order.asc("title")));
         } else if (sorting.equalsIgnoreCase("DESC")) {
             posts = postRepository.findByDeletedFalse(Sort.by(Sort.Order.desc("title")));
         } else {
-            posts = listAllNotDeleted();
+            return listAllNotDeleted();
         }
-        return posts;
+
+        return customMapper.mapPosts(posts);
     }
 }
