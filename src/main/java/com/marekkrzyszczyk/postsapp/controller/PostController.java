@@ -45,11 +45,12 @@ public class PostController {
         return posts;
     }
 
-    @Scheduled(cron = "30 35 11 * * ?")
+    @Scheduled(cron = "00 45 23 * * ?")
     @PostMapping("/posts")
-    public List<Post> savePosts() {
+    public ResponseEntity<Post> savePosts() {
         List<Post> posts = callGetAllPosts();
-        return postService.saveAll(posts);
+        postService.saveAll(posts);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/posts/{id}")

@@ -27,7 +27,7 @@ class CustomMapperTest {
     List<Post> posts = new ArrayList<>(Arrays.asList(post1, post2));
 
     @Test
-    public void mapPostsTest(){
+    public void mapPostsTest() {
         List<PostDto> postsDto = customMapper.mapPosts(posts);
         assertEquals(posts.size(), postsDto.size());
         assertEquals(posts.get(0).getId(), postsDto.get(0).getId());
