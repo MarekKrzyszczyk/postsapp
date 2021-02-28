@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -44,6 +45,7 @@ public class PostController {
         return posts;
     }
 
+    @Scheduled(cron = "30 35 11 * * ?")
     @PostMapping("/posts")
     public List<Post> savePosts() {
         List<Post> posts = callGetAllPosts();

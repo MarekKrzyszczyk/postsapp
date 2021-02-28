@@ -1,5 +1,6 @@
 package com.marekkrzyszczyk.postsapp.service;
 
+import com.marekkrzyszczyk.postsapp.model.dto.CustomMapper;
 import com.marekkrzyszczyk.postsapp.model.dto.PostDto;
 import com.marekkrzyszczyk.postsapp.model.entity.Post;
 import com.marekkrzyszczyk.postsapp.repository.PostRepository;
@@ -9,8 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,15 +27,6 @@ class PostServiceTest {
     private Post post1 = new Post(1L, "title", "some content", 2L);
     private Post post2 = new Post(2L, "next title", "some other content", 1L);
     private Optional<Post> optionalPost1 = Optional.of(post1);
-
-    @Test
-    void listAllTest() {
-        when(postRepository.findByDeletedFalse()).thenReturn(Arrays.asList(post1, post2));
-        List<PostDto> posts = postService.listAllNotDeleted();
-        assertEquals(2, posts.size());
-        assertEquals(new Post(1L, "title", "some content", 2L), posts.get(0));
-        assertEquals(new Post(2L, "next title", "some other content", 1L), posts.get(1));
-    }
 
     @Test
     void deleteByIdTest() {
